@@ -41,8 +41,17 @@ namespace Vcpkg
                 else
                 {
                     var lsplit = line.Split(new string[] { ": " }, 2, StringSplitOptions.RemoveEmptyEntries);
-                    paragraph.Add(lsplit[0], lsplit.Length < 2 ? string.Empty : lsplit[1]);
-                    lastkey = lsplit[0];
+                    var key = lsplit[0];
+                    var label = lsplit.Length < 2 ? string.Empty : lsplit[1];
+                    string otherLabel="";
+                    if (paragraph.TryGetValue(key, out otherLabel))
+                    {
+                        label = otherLabel + "\n" + label;
+                        paragraph[key] = label;
+                    }                        
+                    else
+                        paragraph.Add(key,label);
+                    lastkey = key;
                 }
             }
             if(paragraph.Count >0) result.Add(paragraph);
