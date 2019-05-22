@@ -101,7 +101,10 @@ namespace Vcpkg
             // TODO: Add regex to find "packages x/x" and "...done" to compute the progress
         }
 
-        private void AppendText(string text) => Output.Text += text + Environment.NewLine;
+        private void AppendText(string text) {
+            Output.Text += text + Environment.NewLine;
+            Output.ScrollToEnd();
+        } 
 
         private void WaitforExit()
         {
